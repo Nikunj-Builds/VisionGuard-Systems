@@ -120,6 +120,7 @@
             font-weight: bold;
             font-size: 0.9rem;
             transition: background 0.2s;
+            cursor: pointer; /* Hath ka icon laane ke liye */
         }
 
         .top-contact-btn:hover {
@@ -286,7 +287,7 @@
 
         .item-display {
             height: 240px;
-            background-color: #ffffff; /* Keeping white background to seamlessly match CP-Plus product images */
+            background-color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -311,14 +312,10 @@
             font-size: 1.1rem; 
             margin-bottom: 0.5rem; 
             min-height: 44px; 
-            
-            /* Cross-browser compatibility ke liye */
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;  
             overflow: hidden;
-
-            /* Yeh line likhte hi VS Code ki yellow line hat jayegi */
             line-clamp: 2; 
         }
         
@@ -358,24 +355,14 @@
             background-color: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
             padding: 5rem 2rem;
-            text-align: center;
+            text-align: left;
         }
 
-        /* --- ABOUT US DETAILS (LEFT ALIGNED & PREMIUM SYSTEM) --- */
-        .about-hero {
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 5rem 2rem;
-            text-align: left; /* Center se left kiya */
-        }
-
-        /* Pure layout ko baki sections ki tarah 1300px max-width par lock karne ke liye */
         .about-hero-container {
             max-width: 1300px;
             margin: 0 auto;
         }
 
-        /* "About us" ko top left me chhota premium badge look dene ke liye */
         .about-hero h2 { 
             font-size: 0.95rem; 
             font-weight: 700; 
@@ -385,10 +372,9 @@
             color: var(--cool-gray);
         }
 
-        /* "Trusted Security Solutions Since 2006" heading ko left me bada karne ke liye */
         .about-hero h3 { 
             color: var(--pure-white); 
-            font-size: 3.2rem; /* Size badha kar bada kiya */
+            font-size: 3.2rem; 
             font-weight: 900;
             line-height: 1.2;
             margin-bottom: 1.5rem; 
@@ -396,13 +382,12 @@
             letter-spacing: -1px;
         }
 
-        /* Paragraph text ko left grid ke mutabik set karne ke liye */
         .about-hero p { 
             color: var(--cool-gray); 
             font-size: 1.15rem;
             line-height: 1.7;
             max-width: 750px; 
-            margin: 0; /* Margin auto hataya taaki left me align rahe */
+            margin: 0; 
         }
 
         .team-block h4 { font-size: 1.8rem; }
@@ -485,7 +470,8 @@
             font-size: 0.85rem;
             color: var(--cool-gray);
         }
-        /* --- CUSTOM TOAST NOTIFICATION --- */
+
+        /* --- CUSTOM TOAST NOTIFICATION STYLES --- */
         .toast-notification {
             position: fixed;
             bottom: 30px;
@@ -513,9 +499,10 @@
         }
         
         .toast-notification i {
-            color: #25d366; /* Green checkmark icon */
+            color: #25d366;
         }
         .footer-bottom a { color: var(--cool-gray); text-decoration: none; margin-left: 1rem; }
+
         /* --- RESPONSIVE MOBILE FIXES --- */
         @media (max-width: 968px) {
             .hero-viewport { grid-template-columns: 1fr; padding: 3rem 1rem; }
@@ -710,6 +697,7 @@
             </div>
         </section>
 
+        <section style="max-width: 1300px; margin: 0 auto; padding: 4rem 2rem 6rem;">
             <div class="team-block">
                 <h4>Meet the Team</h4>
                 <p class="team-subtext">Expert technicians ensuring your safety</p>
@@ -775,6 +763,10 @@
         </div>
     </footer>
 
+    <div id="copy-toast" class="toast-notification">
+        <i class="fa-solid fa-circle-check"></i> +91 9810946227 Copied to Clipboard!
+    </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
@@ -798,7 +790,6 @@
 
                 const targetNav = document.querySelector(`.nav-link[data-target="${targetId}"]`);
                 if (targetNav) {
-                    targetNav.classList.add("add"); // backwards fallback
                     targetNav.classList.add("active");
                 }
 
@@ -813,36 +804,62 @@
                 });
             });
 
-            // --- COPY NUMBER & SHOW NOTIFICATION LOGIC (FIXED) ---
+            const exploreBtn = document.getElementById("hero-explore-btn");
+            if (exploreBtn) {
+                exploreBtn.addEventListener("click", () => {
+                    changePage("shop");
+                });
+            }
+
+            // --- COPY NUMBER & SHOW NOTIFICATION LOGIC (FIXED & SECURED) ---
             const contactBtn = document.getElementById("top-contact-click");
             const toastElement = document.getElementById("copy-toast");
             const numberToCopy = "+919810946227";
 
             if (contactBtn && toastElement) {
                 contactBtn.addEventListener("click", (e) => {
-                    // Yeh line page ko upar jump karne se rokegi
                     e.preventDefault(); 
                     
-                    // Clipboard me copy karne ka action
-                    navigator.clipboard.writeText(numberToCopy).then(() => {
-                        
-                        // Notification ko screen par lekar aao
-                        toastElement.classList.add("show-toast");
-
-                        // 3 second baad notification ko chupao
-                        setTimeout(() => {
-                            toastElement.classList.remove("show-toast");
-                        }, 3000);
-
-                    }).catch(err => {
-                        // Agar security block ho to direct dialer khol do
-                        console.error("Could not copy text: ", err);
-                        window.location.href = `tel:${numberToCopy}`;
-                    });
+                    // Super Solid Tarika: Pehle Clipboard API try karein
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(numberToCopy).then(() => {
+                            showToastAlert();
+                        }).catch(err => {
+                            fallbackCopyText(numberToCopy);
+                        });
+                    } else {
+                        // Agar browser local files par strict ho to yeh fallback chalega
+                        fallbackCopyText(numberToCopy);
+                    }
                 });
             }
 
-            // --- 2. SHOP CART WITH DIRECT WHATSAPP ACTION ---
+            function showToastAlert() {
+                toastElement.classList.add("show-toast");
+                setTimeout(() => {
+                    toastElement.classList.remove("show-toast");
+                }, 3000);
+            }
+
+            // Purane methods ya Local system offline files ke liye pro hacker fallback hack
+            function fallbackCopyText(text) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed"; // Screen par na dikhe isliye corner me fenko
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToastAlert(); // Successfully copy hone par toast aayega
+                } catch (err) {
+                    console.error('Fallback failed', err);
+                    window.location.href = `tel:${text}`; // Kuch kaam na kare to dialer khol do
+                }
+                document.body.removeChild(textArea);
+            }
+
+            // --- 2. SHOP CART WITH DIRECT WHATSAPP ACTION (FIXED) ---
             const buyButtons = document.querySelectorAll(".item-action-btn");
 
             buyButtons.forEach(button => {
@@ -851,7 +868,6 @@
                     const associatedCheckboxId = button.getAttribute("data-cb");
                     const isInstallationChecked = document.getElementById(associatedCheckboxId).checked;
 
-                    // WhatsApp Custom Message Text Formulation
                     let textMessage = `Hello VisionGuard, I want to inquire/order:\n- Product: ${productName}`;
                     if (isInstallationChecked) {
                         textMessage += `\n- Requirement: Need On-site Installation Service`;
@@ -859,10 +875,7 @@
                         textMessage += `\n- Requirement: Hardware Delivery Only`;
                     }
 
-                    // Encode message for URL format
                     const encodedMessage = encodeURIComponent(textMessage);
-                    
-                    // Redirecting directly to business WhatsApp channel
                     window.open(`https://wa.me/919810946227?text=${encodedMessage}`, '_blank');
                 });
             });
