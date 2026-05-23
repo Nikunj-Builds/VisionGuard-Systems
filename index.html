@@ -813,10 +813,29 @@
                 });
             });
 
-            const exploreBtn = document.getElementById("hero-explore-btn");
-            if (exploreBtn) {
-                exploreBtn.addEventListener("click", () => {
-                    changePage("shop");
+            // --- COPY NUMBER & SHOW NOTIFICATION LOGIC ---
+            const contactBtn = document.getElementById("top-contact-click");
+            const toastElement = document.getElementById("copy-toast");
+            const numberToCopy = "+919810946227";
+
+            if (contactBtn && toastElement) {
+                contactBtn.addEventListener("click", () => {
+                    // Modern tarika clipboard me text copy karne ka
+                    navigator.clipboard.writeText(numberToCopy).then(() => {
+                        
+                        // Notification ko screen par show karo
+                        toastElement.classList.add("show-toast");
+
+                        // Thik 3 second baad notification ko chupao
+                        setTimeout(() => {
+                            toastElement.classList.remove("show-toast");
+                        }, 3000);
+
+                    }).catch(err => {
+                        // Agar browser purana hai ya clipboard block hai to direct dialer khol do
+                        console.error("Could not copy text: ", err);
+                        window.location.href = `tel:${numberToCopy}`;
+                    });
                 });
             }
 
