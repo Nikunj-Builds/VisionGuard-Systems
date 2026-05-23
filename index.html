@@ -546,7 +546,7 @@
             </nav>
             <div class="nav-right">
                 <a href="tel:+919810946227" class="phone-link"><i class="fa-solid fa-phone"></i> +91 9810946227</a>
-                <a href="javascript:void(0)" id="top-contact-click" class="top-contact-btn">Contact Us</a>
+                <a href="#" id="top-contact-click" class="top-contact-btn">Contact Us</a>
             </div>
         </div>
     </header>
@@ -813,26 +813,29 @@
                 });
             });
 
-            // --- COPY NUMBER & SHOW NOTIFICATION LOGIC ---
+            // --- COPY NUMBER & SHOW NOTIFICATION LOGIC (FIXED) ---
             const contactBtn = document.getElementById("top-contact-click");
             const toastElement = document.getElementById("copy-toast");
             const numberToCopy = "+919810946227";
 
             if (contactBtn && toastElement) {
-                contactBtn.addEventListener("click", () => {
-                    // Modern tarika clipboard me text copy karne ka
+                contactBtn.addEventListener("click", (e) => {
+                    // Yeh line page ko upar jump karne se rokegi
+                    e.preventDefault(); 
+                    
+                    // Clipboard me copy karne ka action
                     navigator.clipboard.writeText(numberToCopy).then(() => {
                         
-                        // Notification ko screen par show karo
+                        // Notification ko screen par lekar aao
                         toastElement.classList.add("show-toast");
 
-                        // Thik 3 second baad notification ko chupao
+                        // 3 second baad notification ko chupao
                         setTimeout(() => {
                             toastElement.classList.remove("show-toast");
                         }, 3000);
 
                     }).catch(err => {
-                        // Agar browser purana hai ya clipboard block hai to direct dialer khol do
+                        // Agar security block ho to direct dialer khol do
                         console.error("Could not copy text: ", err);
                         window.location.href = `tel:${numberToCopy}`;
                     });
