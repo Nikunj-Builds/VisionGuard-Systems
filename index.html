@@ -111,20 +111,31 @@
             font-size: 0.95rem;
         }
 
-        .top-contact-btn {
-            background-color: var(--brand-red);
+        /* Cart Icon Trigger Style */
+        .cart-trigger-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
             color: white;
             padding: 0.6rem 1.2rem;
             border-radius: 4px;
-            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
             font-weight: bold;
             font-size: 0.9rem;
             transition: background 0.2s;
-            cursor: pointer; /* Hath ka icon laane ke liye */
         }
-
-        .top-contact-btn:hover {
-            background-color: var(--brand-red-hover);
+        .cart-trigger-btn:hover {
+            background: var(--gray-highlight);
+        }
+        .cart-badge {
+            background-color: var(--brand-red);
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 7px;
+            border-radius: 50%;
         }
 
         /* --- DYNAMIC PAGES VISIBILITY --- */
@@ -281,24 +292,22 @@
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            border-radius: 6px;
-            overflow: hidden;
         }
 
         .item-display {
-            height: 240px;
-            background-color: #ffffff;
+            height: 220px;
+            background-color: var(--gray-highlight);
             display: flex;
             align-items: center;
             justify-content: center;
             border-bottom: 1px solid var(--border-color);
-            padding: 1.5rem;
+            overflow: hidden;
         }
 
         .item-display img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .item-details {
@@ -308,18 +317,8 @@
             flex-grow: 1;
         }
 
-        .item-details h3 { 
-            font-size: 1.1rem; 
-            margin-bottom: 0.5rem; 
-            min-height: 44px; 
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;  
-            overflow: hidden;
-            line-clamp: 2; 
-        }
-        
-        .item-cost { font-size: 1.3rem; color: var(--brand-red); font-weight: bold; margin-bottom: 1.5rem; }
+        .item-details h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .item-cost { font-size: 1.4rem; color: var(--brand-red); font-weight: bold; margin-bottom: 1.5rem; }
 
         .installation-box {
             background-color: var(--pitch-black);
@@ -329,10 +328,9 @@
             display: flex;
             align-items: center;
             gap: 0.6rem;
-            border-radius: 4px;
         }
 
-        .installation-box input { accent-color: var(--brand-red); width: 16px; height: 16px; cursor: pointer; }
+        .installation-box input { accent-color: var(--brand-red); width: 16px; height: 16px; }
         .installation-box label { font-size: 0.85rem; color: var(--cool-gray); cursor: pointer; }
 
         .item-action-btn {
@@ -344,51 +342,149 @@
             cursor: pointer;
             width: 100%;
             transition: all 0.2s;
-            border-radius: 4px;
-            margin-top: auto;
         }
 
         .item-action-btn:hover { background: white; color: black; }
 
-        /* --- ABOUT US DETAILS --- */
+        /* --- SIDEBAR CART FLYOUT DESIGN --- */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            height: 100vh;
+            background-color: #0b0b0b;
+            border-left: 1px solid var(--border-color);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.3s ease-in-out;
+        }
+        .cart-sidebar.open {
+            right: 0;
+        }
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cart-header h3 { font-size: 1.3rem; font-weight: 800; }
+        .close-cart-btn {
+            background: transparent;
+            border: none;
+            color: var(--cool-gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .close-cart-btn:hover { color: white; }
+        
+        .cart-items-container {
+            padding: 1.5rem;
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .empty-cart-text {
+            color: var(--cool-gray);
+            text-align: center;
+            margin-top: 3rem;
+            font-style: italic;
+        }
+        .cart-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cart-item-title { font-weight: bold; font-size: 0.95rem; }
+        .cart-item-setup { font-size: 0.8rem; color: var(--cool-gray); }
+        .cart-item-price { color: var(--brand-red); font-weight: bold; }
+        
+        .remove-item-btn {
+            background: transparent;
+            border: none;
+            color: #ff3b30;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .remove-item-btn:hover { text-decoration: underline; }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            background: #080808;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+        .total-row span:last-child { color: var(--brand-red); }
+        
+        .whatsapp-order-btn {
+            background-color: #25d366;
+            color: white;
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .whatsapp-order-btn:hover { background-color: #1ebd59; }
+        
+        .cart-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 1999;
+            display: none;
+            backdrop-filter: blur(4px);
+        }
+        .cart-backdrop.open { display: block; }
+
+        /* --- ABOUT US DETAILS (WITH IMAGE SUPPORT) --- */
         .about-hero {
             background-color: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
             padding: 5rem 2rem;
-            text-align: left;
+            text-align: center;
         }
 
-        .about-hero-container {
-            max-width: 1300px;
-            margin: 0 auto;
-        }
+        .about-hero h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .about-hero h3 { color: var(--brand-red); font-size: 1.4rem; margin-bottom: 1rem; }
+        .about-hero p { color: var(--cool-gray); max-width: 700px; margin: 0 auto; }
 
-        .about-hero h2 { 
-            font-size: 0.95rem; 
-            font-weight: 700; 
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 1.2rem; 
-            color: var(--cool-gray);
-        }
-
-        .about-hero h3 { 
-            color: var(--pure-white); 
-            font-size: 3.2rem; 
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 1.5rem; 
-            max-width: 850px; 
-            letter-spacing: -1px;
-        }
-
-        .about-hero p { 
-            color: var(--cool-gray); 
-            font-size: 1.15rem;
-            line-height: 1.7;
-            max-width: 750px; 
-            margin: 0; 
-        }
+        .about-content { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
+        .editorial-block { margin-bottom: 4rem; }
+        .editorial-block h4 { font-size: 1.8rem; margin-bottom: 1rem; }
+        .editorial-block p { color: var(--cool-gray); line-height: 1.7; }
 
         .team-block h4 { font-size: 1.8rem; }
         .team-subtext { color: var(--cool-gray); margin-bottom: 3rem; }
@@ -471,36 +567,6 @@
             color: var(--cool-gray);
         }
 
-        /* --- CUSTOM TOAST NOTIFICATION STYLES --- */
-        .toast-notification {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background-color: var(--card-bg);
-            color: var(--pure-white);
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            border: 1px solid var(--brand-red);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            font-weight: bold;
-            font-size: 0.95rem;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-        }
-        
-        .toast-notification.show-toast {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-        
-        .toast-notification i {
-            color: #25d366;
-        }
         .footer-bottom a { color: var(--cool-gray); text-decoration: none; margin-left: 1rem; }
 
         /* --- RESPONSIVE MOBILE FIXES --- */
@@ -510,6 +576,7 @@
             .hero-content h1 { font-size: 2.8rem; }
             .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
             .profiles-grid { grid-template-columns: 1fr; }
+            .cart-sidebar { width: 100%; right: -100%; }
         }
     </style>
 </head>
@@ -533,10 +600,32 @@
             </nav>
             <div class="nav-right">
                 <a href="tel:+919810946227" class="phone-link"><i class="fa-solid fa-phone"></i> +91 9810946227</a>
-                <a href="#" id="top-contact-click" class="top-contact-btn">Contact Us</a>
+                <button class="cart-trigger-btn" id="cart-toggle-nav">
+                    <i class="fa-solid fa-cart-shopping"></i> Cart <span class="cart-badge" id="cart-count">0</span>
+                </button>
             </div>
         </div>
     </header>
+
+    <div class="cart-backdrop" id="cart-backdrop"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Order Portfolio</h3>
+            <button class="close-cart-btn" id="cart-close-btn">&times;</button>
+        </div>
+        <div class="cart-items-container" id="cart-items-wrapper">
+            <p class="empty-cart-text">Your cart is currently empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>Grand Total:</span>
+                <span id="cart-grand-total">₹0</span>
+            </div>
+            <button class="whatsapp-order-btn" id="whatsapp-submit-order">
+                <i class="fa-brands fa-whatsapp"></i> Send Order via WhatsApp
+            </button>
+        </div>
+    </div>
 
     <main id="view-home" class="page-view active-view">
         <section class="hero-viewport">
@@ -577,112 +666,112 @@
 
     <main id="view-shop" class="page-view">
         <section class="shop-header">
-            <h2>CP-Plus Specialized Hardware Catalog</h2>
+            <h2>Hardware & Core Systems</h2>
             <p>Select specialized equipment with an optional configuration and localized field setup service.</p>
         </section>
 
         <section class="catalog-grid">
             <div class="item-card">
-                <div class="item-display"><img src="illumix_bullet.jpg" alt="CP Plus Illumix 2.4MP Full HD Bullet Camera"></div>
+                <div class="item-display"><img src="normal_dome.jpg" alt="Normal Dome Camera"></div>
                 <div class="item-details">
-                    <h3>CP Plus Illumix 2.4MP Full HD Bullet Camera</h3>
-                    <div class="item-cost">Price: ₹1,399</div>
+                    <h3>Normal Dome Camera</h3>
+                    <div class="item-cost">Anumit Price: ₹1,100</div>
                     <div class="installation-box">
-                        <input type="checkbox" id="setup-cp1" class="setup-cb">
-                        <label for="setup-cp1">Include Installation (+₹600)</label>
+                        <input type="checkbox" id="setup-p1" class="setup-cb">
+                        <label for="setup-p1">Include Installation (+₹300)</label>
                     </div>
-                    <button class="item-action-btn" data-name="CP Plus Illumix 2.4MP Full HD Bullet Camera" data-cb="setup-cp1">Add to Order Portfolio</button>
+                    <button class="item-action-btn" data-name="Normal Dome Camera" data-price="1100" data-setup-price="300" data-cb="setup-p1">Add to Cart</button>
                 </div>
             </div>
 
             <div class="item-card">
-                <div class="item-display"><img src="illumix_doom.jpg" alt="CP Plus Illumix 2.4MP Full HD Dome Camera"></div>
+                <div class="item-display"><img src="normal_bullet.jpg" alt="Normal Bullet Camera"></div>
                 <div class="item-details">
-                    <h3>CP Plus Illumix 2.4MP Full HD Dome Camera</h3>
-                    <div class="item-cost">Price: ₹1,399</div>
+                    <h3>Normal Bullet Camera</h3>
+                    <div class="item-cost">Anumit Price: ₹1,200</div>
                     <div class="installation-box">
-                        <input type="checkbox" id="setup-cp2" class="setup-cb">
-                        <label for="setup-cp2">Include Installation (+₹600)</label>
+                        <input type="checkbox" id="setup-p2" class="setup-cb">
+                        <label for="setup-p2">Include Installation (+₹300)</label>
                     </div>
-                    <button class="item-action-btn" data-name="CP Plus Illumix 2.4MP Full HD Dome Camera" data-cb="setup-cp2">Add to Order Portfolio</button>
+                    <button class="item-action-btn" data-name="Normal Bullet Camera" data-price="1200" data-setup-price="300" data-cb="setup-p2">Add to Cart</button>
                 </div>
             </div>
 
             <div class="item-card">
-                <div class="item-display"><img src="ip_2mp_dome.jpg" alt="CP Plus Illumix 2MP IP Dome Camera with Audio & Night Vision"></div>
+                <div class="item-display"><img src="illumix_doom.jpg" alt="Illumix Dome Camera"></div>
                 <div class="item-details">
-                    <h3>CP Plus Illumix 2MP IP Dome Camera (Audio & Night Vision)</h3>
-                    <div class="item-cost">Price: ₹2,099</div>
+                    <h3>Illumix Dome Camera</h3>
+                    <div class="item-cost">Anumit Price: ₹1,400</div>
                     <div class="installation-box">
-                        <input type="checkbox" id="setup-cp3" class="setup-cb">
-                        <label for="setup-cp3">Include Installation (+₹700)</label>
+                        <input type="checkbox" id="setup-p3" class="setup-cb">
+                        <label for="setup-p3">Include Installation (+₹300)</label>
                     </div>
-                    <button class="item-action-btn" data-name="CP Plus Illumix 2MP IP Dome Camera with Audio & Night Vision" data-cb="setup-cp3">Add to Order Portfolio</button>
+                    <button class="item-action-btn" data-name="Illumix Dome Camera" data-price="1400" data-setup-price="300" data-cb="setup-p3">Add to Cart</button>
                 </div>
             </div>
 
             <div class="item-card">
-                <div class="item-display"><img src="ip_2mp_bullet.jpg" alt="CP Plus Illumix 2MP IP Bullet Camera with Audio"></div>
+                <div class="item-display"><img src="illumix_bullet.jpg" alt="Illumix Bullet Camera"></div>
                 <div class="item-details">
-                    <h3>CP Plus Illumix 2MP IP Bullet Camera with Audio</h3>
-                    <div class="item-cost">Price: ₹2,999</div>
+                    <h3>Illumix Bullet Camera</h3>
+                    <div class="item-cost">Anumit Price: ₹1,500</div>
                     <div class="installation-box">
-                        <input type="checkbox" id="setup-cp4" class="setup-cb">
-                        <label for="setup-cp4">Include Installation (+₹700)</label>
+                        <input type="checkbox" id="setup-p4" class="setup-cb">
+                        <label for="setup-p4">Include Installation (+₹300)</label>
                     </div>
-                    <button class="item-action-btn" data-name="CP Plus Illumix 2MP IP Bullet Camera with Audio" data-cb="setup-cp4">Add to Order Portfolio</button>
+                    <button class="item-action-btn" data-name="Illumix Bullet Camera" data-price="1500" data-setup-price="300" data-cb="setup-p4">Add to Cart</button>
                 </div>
             </div>
 
             <div class="item-card">
-                <div class="item-display"><img src="4ch .jpg" alt="CP-Plus 4 Channel DVR"></div>
+                <div class="item-display"><img src="ip_2mp_dome.jpg" alt="IP 2MP Dome Camera"></div>
                 <div class="item-details">
-                    <h3>CP-Plus 4 Channel DVR (Supports Up to 2.4MP Cameras)</h3>
-                    <div class="item-cost">Price: ₹2,549</div>
+                    <h3>IP 2MP Dome Camera</h3>
+                    <div class="item-cost">Anumit Price: ₹1,900</div>
                     <div class="installation-box">
-                        <input type="checkbox" id="setup-cp5" class="setup-cb">
-                        <label for="setup-cp5">Include Installation (+₹1,200)</label>
+                        <input type="checkbox" id="setup-p5" class="setup-cb">
+                        <label for="setup-p5">Include Installation (+₹400)</label>
                     </div>
-                    <button class="item-action-btn" data-name="CP-Plus 4 Channel DVR (Supports Up to 2.4MP)" data-cb="setup-cp5">Add to Order Portfolio</button>
+                    <button class="item-action-btn" data-name="IP 2MP Dome Camera" data-price="1900" data-setup-price="400" data-cb="setup-p5">Add to Cart</button>
                 </div>
             </div>
 
             <div class="item-card">
-                <div class="item-display"><img src="4ch .jpg" alt="CP-Plus 8 Channel DVR"></div>
+                <div class="item-display"><img src="ip_2mp_bullet.jpg" alt="IP 2MP Bullet Camera"></div>
                 <div class="item-details">
-                    <h3>CP-Plus 8 Channel DVR (Supports Up to 2.4MP Cameras)</h3>
-                    <div class="item-cost">Price: ₹3,650</div>
+                    <h3>IP 2MP Bullet Camera</h3>
+                    <div class="item-cost">Anumit Price: ₹2,100</div>
                     <div class="installation-box">
-                        <input type="checkbox" id="setup-cp6" class="setup-cb">
-                        <label for="setup-cp6">Include Installation (+₹1,500)</label>
+                        <input type="checkbox" id="setup-p6" class="setup-cb">
+                        <label for="setup-p6">Include Installation (+₹400)</label>
                     </div>
-                    <button class="item-action-btn" data-name="CP-Plus 8 Channel DVR (Supports Up to 2.4MP)" data-cb="setup-cp6">Add to Order Portfolio</button>
+                    <button class="item-action-btn" data-name="IP 2MP Bullet Camera" data-price="2100" data-setup-price="400" data-cb="setup-p6">Add to Cart</button>
                 </div>
             </div>
 
             <div class="item-card">
-                <div class="item-display"><img src="4ch_NVR.jpg" alt="CP-Plus 8 Channel NVR"></div>
+                <div class="item-display"><img src="4ch .jpg" alt="4 Channel DVR"></div>
                 <div class="item-details">
-                    <h3>CP-Plus 8 Channel High-Definition NVR</h3>
-                    <div class="item-cost">Price: ₹4,999</div>
+                    <h3>4 Channel DVR</h3>
+                    <div class="item-cost">Anumit Price: ₹3,200</div>
                     <div class="installation-box">
-                        <input type="checkbox" id="setup-cp7" class="setup-cb">
-                        <label for="setup-cp7">Include Installation (+₹2,000)</label>
+                        <input type="checkbox" id="setup-p7" class="setup-cb">
+                        <label for="setup-p7">Include Installation (+₹500)</label>
                     </div>
-                    <button class="item-action-btn" data-name="CP-Plus 8 Channel NVR" data-cb="setup-cp7">Add to Order Portfolio</button>
+                    <button class="item-action-btn" data-name="4 Channel DVR" data-price="3200" data-setup-price="500" data-cb="setup-p7">Add to Cart</button>
                 </div>
             </div>
 
             <div class="item-card">
-                <div class="item-display"><img src="4ch_NVR.jpg" alt="CP-Plus 4 Channel NVR"></div>
+                <div class="item-display"><img src="4ch_NVR.jpg" alt="4 Channel NVR"></div>
                 <div class="item-details">
-                    <h3>CP-Plus 4 Channel High-Definition NVR</h3>
-                    <div class="item-cost">Price: ₹4,399</div>
+                    <h3>4 Channel NVR</h3>
+                    <div class="item-cost">Anumit Price: ₹4,300</div>
                     <div class="installation-box">
-                        <input type="checkbox" id="setup-cp8" class="setup-cb">
-                        <label for="setup-cp8">Include Installation (+₹1,500)</label>
+                        <input type="checkbox" id="setup-p8" class="setup-cb">
+                        <label for="setup-p8">Include Installation (+₹600)</label>
                     </div>
-                    <button class="item-action-btn" data-name="CP-Plus 4 Channel NVR" data-cb="setup-cp8">Add to Order Portfolio</button>
+                    <button class="item-action-btn" data-name="4 Channel NVR" data-price="4300" data-setup-price="600" data-cb="setup-p8">Add to Cart</button>
                 </div>
             </div>
         </section>
@@ -690,14 +779,17 @@
 
     <main id="view-about" class="page-view">
         <section class="about-hero">
-            <div class="about-hero-container">
-                <h2>About us</h2>
-                <h3>Trusted Security Solutions Since 2006</h3>
-                <p>Professional CCTV installation, DVR setup, door phone systems, and surveillance solutions for homes, shops, and offices.</p>
-            </div>
+            <h2>About us</h2>
+            <h3>Trusted Security Solutions Since 2006</h3>
+            <p>Professional CCTV installation, DVR setup, door phone systems, and surveillance solutions for homes, shops, and offices.</p>
         </section>
 
-        <section style="max-width: 1300px; margin: 0 auto; padding: 4rem 2rem 6rem;">
+        <section class="about-content">
+            <div class="editorial-block">
+                <h4>Complete CCTV & Surveillance Solutions</h4>
+                <p>We specialize in CCTV Installation, DVR systems, door phones, and security solutions for homes, shops, and offices. We focus on reliable products, professional installation, and customer satisfaction.</p>
+            </div>
+
             <div class="team-block">
                 <h4>Meet the Team</h4>
                 <p class="team-subtext">Expert technicians ensuring your safety</p>
@@ -705,7 +797,7 @@
                 <div class="profiles-grid">
                     <div class="profile-card">
                         <div class="profile-avatar">
-                            <img src="Vinay kumar.png" alt="Vinay Kumar">
+                            <img src="papa.jpg" alt="Vinay Kumar">
                         </div>
                         <div class="profile-info">
                             <h5>Vinay Kumar</h5>
@@ -716,7 +808,7 @@
 
                     <div class="profile-card">
                         <div class="profile-avatar">
-                            <img src="my-photo.png" alt="Nikunj Sagar">
+                            <img src="my-photo.jpg" alt="Nikunj Sagar">
                         </div>
                         <div class="profile-info">
                             <h5>Nikunj Sagar</h5>
@@ -763,10 +855,6 @@
         </div>
     </footer>
 
-    <div id="copy-toast" class="toast-notification">
-        <i class="fa-solid fa-circle-check"></i> +91 9810946227 Copied to Clipboard!
-    </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
@@ -811,74 +899,121 @@
                 });
             }
 
-            // --- COPY NUMBER & SHOW NOTIFICATION LOGIC (FIXED & SECURED) ---
-            const contactBtn = document.getElementById("top-contact-click");
-            const toastElement = document.getElementById("copy-toast");
-            const numberToCopy = "+919810946227";
+            // --- 2. GLOBAL CART SYSTEM LOGIC ---
+            let cart = [];
 
-            if (contactBtn && toastElement) {
-                contactBtn.addEventListener("click", (e) => {
-                    e.preventDefault(); 
-                    
-                    // Super Solid Tarika: Pehle Clipboard API try karein
-                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText(numberToCopy).then(() => {
-                            showToastAlert();
-                        }).catch(err => {
-                            fallbackCopyText(numberToCopy);
-                        });
-                    } else {
-                        // Agar browser local files par strict ho to yeh fallback chalega
-                        fallbackCopyText(numberToCopy);
-                    }
+            const cartSidebar = document.getElementById("cart-sidebar");
+            const cartBackdrop = document.getElementById("cart-backdrop");
+            const cartCountBadge = document.getElementById("cart-count");
+            const cartItemsWrapper = document.getElementById("cart-items-wrapper");
+            const cartGrandTotalElement = document.getElementById("cart-grand-total");
+
+            function toggleCartVisibility(open) {
+                if (open) {
+                    cartSidebar.classList.add("open");
+                    cartBackdrop.classList.add("open");
+                } else {
+                    cartSidebar.classList.remove("open");
+                    cartBackdrop.classList.remove("open");
+                }
+            }
+
+            document.getElementById("cart-toggle-nav").addEventListener("click", () => toggleCartVisibility(true));
+            document.getElementById("cart-close-btn").addEventListener("click", () => toggleCartVisibility(false));
+            cartBackdrop.addEventListener("click", () => toggleCartVisibility(false));
+
+            function renderCart() {
+                cartCountBadge.textContent = cart.length;
+
+                if (cart.length === 0) {
+                    cartItemsWrapper.innerHTML = `<p class="empty-cart-text">Your cart is currently empty.</p>`;
+                    cartGrandTotalElement.textContent = "₹0";
+                    return;
+                }
+
+                cartItemsWrapper.innerHTML = "";
+                let calculatedGrandTotal = 0;
+
+                cart.forEach((item, index) => {
+                    const itemTotalCost = item.basePrice + (item.includeInstallation ? item.setupPrice : 0);
+                    calculatedGrandTotal += itemTotalCost;
+
+                    const itemNode = document.createElement("div");
+                    itemNode.classList.add("cart-item");
+                    itemNode.innerHTML = `
+                        <div class="cart-item-row">
+                            <span class="cart-item-title">${item.name}</span>
+                            <button class="remove-item-btn" data-index="${index}"><i class="fa-solid fa-trash"></i> Remove</button>
+                        </div>
+                        <div class="cart-item-row">
+                            <span class="cart-item-setup">${item.includeInstallation ? '⚙️ Hardware + Installation' : '📦 Hardware Delivery Only'}</span>
+                            <span class="cart-item-price">₹${itemTotalCost.toLocaleString('en-IN')}</span>
+                        </div>
+                    `;
+                    cartItemsWrapper.appendChild(itemNode);
+                });
+
+                cartGrandTotalElement.textContent = `₹${calculatedGrandTotal.toLocaleString('en-IN')}`;
+
+                document.querySelectorAll(".remove-item-btn").forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        const targetIdx = parseInt(btn.getAttribute("data-index"));
+                        cart.splice(targetIdx, 1);
+                        renderCart();
+                    });
                 });
             }
 
-            function showToastAlert() {
-                toastElement.classList.add("show-toast");
-                setTimeout(() => {
-                    toastElement.classList.remove("show-toast");
-                }, 3000);
-            }
-
-            // Purane methods ya Local system offline files ke liye pro hacker fallback hack
-            function fallbackCopyText(text) {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                textArea.style.position = "fixed"; // Screen par na dikhe isliye corner me fenko
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showToastAlert(); // Successfully copy hone par toast aayega
-                } catch (err) {
-                    console.error('Fallback failed', err);
-                    window.location.href = `tel:${text}`; // Kuch kaam na kare to dialer khol do
-                }
-                document.body.removeChild(textArea);
-            }
-
-            // --- 2. SHOP CART WITH DIRECT WHATSAPP ACTION (FIXED) ---
-            const buyButtons = document.querySelectorAll(".item-action-btn");
-
-            buyButtons.forEach(button => {
+            const addToCartButtons = document.querySelectorAll(".item-action-btn");
+            addToCartButtons.forEach(button => {
                 button.addEventListener("click", () => {
-                    const productName = button.getAttribute("data-name");
-                    const associatedCheckboxId = button.getAttribute("data-cb");
-                    const isInstallationChecked = document.getElementById(associatedCheckboxId).checked;
+                    const name = button.getAttribute("data-name");
+                    const basePrice = parseInt(button.getAttribute("data-price"));
+                    const setupPrice = parseInt(button.getAttribute("data-setup-price"));
+                    const checkboxId = button.getAttribute("data-cb");
+                    const includeInstallation = document.getElementById(checkboxId).checked;
 
-                    let textMessage = `Hello VisionGuard, I want to inquire/order:\n- Product: ${productName}`;
-                    if (isInstallationChecked) {
-                        textMessage += `\n- Requirement: Need On-site Installation Service`;
-                    } else {
-                        textMessage += `\n- Requirement: Hardware Delivery Only`;
-                    }
+                    cart.push({
+                        name: name,
+                        basePrice: basePrice,
+                        setupPrice: setupPrice,
+                        includeInstallation: includeInstallation
+                    });
 
-                    const encodedMessage = encodeURIComponent(textMessage);
-                    window.open(`https://wa.me/919810946227?text=${encodedMessage}`, '_blank');
+                    renderCart();
+                    toggleCartVisibility(true);
                 });
             });
+
+            // --- 3. CONSOLIDATED WHATSAPP ORDER PLACE SYSTEM ---
+            document.getElementById("whatsapp-submit-order").addEventListener("click", () => {
+                if (cart.length === 0) {
+                    alert("Aapka cart khali hai! Kripya pehle items add karein.");
+                    return;
+                }
+
+                let textMessage = `Hello VisionGuard Systems, I want to place an order:\n\n`;
+                textMessage += `=========================\n`;
+                
+                let grandCalculatedSum = 0;
+
+                cart.forEach((item, i) => {
+                    const cost = item.basePrice + (item.includeInstallation ? item.setupPrice : 0);
+                    grandCalculatedSum += cost;
+
+                    textMessage += `${i + 1}. Item: ${item.name}\n`;
+                    textMessage += `   - Type: ${item.includeInstallation ? 'Hardware + Setup Service' : 'Hardware Delivery Only'}\n`;
+                    textMessage += `   - Cost: ₹${cost.toLocaleString('en-IN')}\n\n`;
+                });
+
+                textMessage += `=========================\n`;
+                textMessage += `Grand Total Amount: ₹${grandCalculatedSum.toLocaleString('en-IN')}\n\n`;
+                textMessage += `Kindly confirm availability and installation scheduling parameters.`;
+
+                const encodedMessage = encodeURIComponent(textMessage);
+                window.open(`https://wa.me/919810946227?text=${encodedMessage}`, '_blank');
+            });
+
         });
     </script>
 </body>
