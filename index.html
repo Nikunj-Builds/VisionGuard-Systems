@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionGuard Systems | Security That Never Blinks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- BRAND DESIGN PALETTE (PREMIUM DARK SYSTEM) --- */
+        :root {
+            --pitch-black: #050505;
+            --card-bg: #0d0d0d;
+            --gray-highlight: #1a1a1a;
+            --pure-white: #ffffff;
+            --cool-gray: #999999;
+            --brand-red: #ff3b30;
+            --brand-red-hover: #e02d23;
+            --border-color: #222222;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--pitch-black);
+            color: var(--pure-white);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- STICKY NAVIGATION HEADER --- */
+        header {
+            background-color: rgba(5, 5, 5, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-icon {
+            background-color: var(--brand-red);
+            color: white;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.1rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .logo-text p {
+            font-size: 0.65rem;
+            color: var(--cool-gray);
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav ul li a {
+            font-size: 0.95rem;
+            color: var(--cool-gray);
+            text-decoration: none;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--pure-white);
+            font-weight: bold;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .phone-link {
+            color: var(--cool-gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .top-contact-btn {
+            background-color: var(--brand-red);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .top-contact-btn:hover {
+            background-color: var(--brand-red-hover);
+        }
+
+        /* --- DYNAMIC PAGES VISIBILITY --- */
+        .page-view {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .page-view.active-view {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HOMEPAGE HERO VIEW --- */
+        .hero-viewport {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid #333;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            color: var(--cool-gray);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .live-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background-color: var(--brand-red);
+            border-radius: 50%;
+        }
+
+        .hero-content h1 {
+            font-size: 4.2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-content h1 span {
+            color: var(--brand-red);
+        }
+
+        .hero-description {
+            color: var(--cool-gray);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .btn-solid-red, .btn-solid-white, .btn-outline-gray {
+            padding: 0.9rem 1.8rem;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-solid-red { background-color: var(--brand-red); color: white; }
+        .btn-solid-red:hover { background-color: var(--brand-red-hover); }
+        .btn-solid-white { background-color: white; color: black; }
+        .btn-outline-gray { background-color: transparent; color: white; border: 1px solid #333; }
+        .btn-outline-gray:hover { background-color: var(--card-bg); }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+        }
+
+        .metric-block h3 { font-size: 2.2rem; font-weight: 900; margin-bottom: 0.2rem; }
+        .metric-block p { font-size: 0.8rem; color: var(--cool-gray); text-transform: uppercase; }
+
+        .hero-graphic {
+            display: flex;
+            justify-content: center;
+        }
+
+        .camera-lens-box {
+            width: 100%;
+            height: 380px;
+            background: linear-gradient(135deg, #111 0%, #050505 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 7rem;
+            color: #1a1a1a;
+            position: relative;
+        }
+
+        .red-dot-live {
+            width: 8px;
+            height: 8px;
+            background-color: var(--brand-red);
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            box-shadow: 0 0 10px var(--brand-red);
+        }
+
+        /* --- CATALOGUE / SHOP APPARATUS --- */
+        .shop-header {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .shop-header h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .shop-header p { color: var(--cool-gray); }
+
+        .catalog-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .item-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .item-display {
+            height: 240px;
+            background-color: #ffffff; /* Keeping white background to seamlessly match CP-Plus product images */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+
+        .item-display img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .item-details {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .item-details h3 { 
+            font-size: 1.1rem; 
+            margin-bottom: 0.5rem; 
+            min-height: 44px; 
+            
+            /* Cross-browser compatibility ke liye */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+
+            /* Yeh line likhte hi VS Code ki yellow line hat jayegi */
+            line-clamp: 2; 
+        }
+        
+        .item-cost { font-size: 1.3rem; color: var(--brand-red); font-weight: bold; margin-bottom: 1.5rem; }
+
+        .installation-box {
+            background-color: var(--pitch-black);
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-radius: 4px;
+        }
+
+        .installation-box input { accent-color: var(--brand-red); width: 16px; height: 16px; cursor: pointer; }
+        .installation-box label { font-size: 0.85rem; color: var(--cool-gray); cursor: pointer; }
+
+        .item-action-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+            border-radius: 4px;
+            margin-top: auto;
+        }
+
+        .item-action-btn:hover { background: white; color: black; }
+
+        /* --- ABOUT US DETAILS --- */
+        .about-hero {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .about-hero h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .about-hero h3 { color: var(--brand-red); font-size: 1.4rem; margin-bottom: 1rem; }
+        .about-hero p { color: var(--cool-gray); max-width: 700px; margin: 0 auto; }
+
+        .about-content { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
+        .editorial-block { margin-bottom: 4rem; }
+        .editorial-block h4 { font-size: 1.8rem; margin-bottom: 1rem; }
+        .editorial-block p { color: var(--cool-gray); line-height: 1.7; }
+
+        .team-block h4 { font-size: 1.8rem; }
+        .team-subtext { color: var(--cool-gray); margin-bottom: 3rem; }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+        }
+
+        .profile-card { display: flex; gap: 1.5rem; }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid var(--brand-red);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background-color: var(--gray-highlight);
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info h5 { font-size: 1.3rem; }
+        .role-tag { color: var(--brand-red); font-size: 0.85rem; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 0.6rem; }
+        .profile-info p { color: var(--cool-gray); font-size: 0.95rem; line-height: 1.6; }
+
+        /* --- GLOBAL FOOTER ARCHITECTURE --- */
+        footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 5rem 2rem 2rem;
+        }
+
+        .footer-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            gap: 3rem;
+            padding-bottom: 4rem;
+        }
+
+        .footer-col h4 { font-size: 1.1rem; text-transform: uppercase; margin-bottom: 1.2rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.6rem; }
+        .footer-col ul li a { color: var(--cool-gray); text-decoration: none; font-size: 0.95rem; cursor: pointer; }
+        .footer-col ul li a:hover { color: white; }
+        .special-col p { color: var(--cool-gray); margin-bottom: 1.5rem; }
+
+        .whatsapp-btn {
+            color: white;
+            text-decoration: none;
+            border: 1px solid #25d366;
+            padding: 0.8rem 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+        }
+
+        .whatsapp-btn i { color: #25d366; font-size: 1.2rem; }
+
+        .footer-bottom {
+            max-width: 1300px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--cool-gray);
+        }
+
+        .footer-bottom a { color: var(--cool-gray); text-decoration: none; margin-left: 1rem; }
+
+        /* --- RESPONSIVE MOBILE FIXES --- */
+        @media (max-width: 968px) {
+            .hero-viewport { grid-template-columns: 1fr; padding: 3rem 1rem; }
+            .hero-graphic { display: none; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .profiles-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo-block">
+                <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="logo-text">
+                    <h1>VisionGuard</h1>
+                    <p>SYSTEMS / EST. 2006</p>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a class="nav-link active" data-target="home">Home</a></li>
+                    <li><a class="nav-link" data-target="shop">Shop</a></li>
+                    <li><a class="nav-link" data-target="about">About Us</a></li>
+                </ul>
+            </nav>
+            <div class="nav-right">
+                <a href="tel:+919810946227" class="phone-link"><i class="fa-solid fa-phone"></i> +91 9810946227</a>
+                <a href="tel:+919810946227" class="top-contact-btn">Contact Us</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="view-home" class="page-view active-view">
+        <section class="hero-viewport">
+            <div class="hero-content">
+                <div class="live-badge">Live / Since 2006 / Delhi NCR</div>
+                <h1>Security that <span>never blinks.</span></h1>
+                <p class="hero-description">Professional CCTV installation, DVR & NVR systems, video door phones, alarms and surveillance solutions for homes, shops, and offices. Trusted by 500+ clients across Delhi NCR.</p>
+                
+                <div class="hero-action-row">
+                    <button class="btn-solid-red" id="hero-explore-btn">Explore Systems <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-solid-white" onclick="window.location.href='tel:+919810946227'">Get Free Quote</button>
+                    <button class="btn-outline-gray" onclick="window.open('https://wa.me/919810946227', '_blank')"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-block">
+                        <h3>20+</h3>
+                        <p>Years Experience</p>
+                    </div>
+                    <div class="metric-block">
+                        <h3>500+</h3>
+                        <p>Installations</p>
+                    </div>
+                    <div class="metric-block">
+                        <h3>24/7</h3>
+                        <p>Live Support</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-graphic">
+                <div class="camera-lens-box">
+                    <i class="fa-solid fa-camera"></i>
+                    <div class="red-dot-live"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <main id="view-shop" class="page-view">
+        <section class="shop-header">
+            <h2>CP-Plus Specialized Hardware Catalog</h2>
+            <p>Select specialized equipment with an optional configuration and localized field setup service.</p>
+        </section>
+
+        <section class="catalog-grid">
+            <div class="item-card">
+                <div class="item-display"><img src="photos/illumix_bullet.jpg" alt="CP Plus Illumix 2.4MP Full HD Bullet Camera"></div>
+                <div class="item-details">
+                    <h3>CP Plus Illumix 2.4MP Full HD Bullet Camera</h3>
+                    <div class="item-cost">Price: ₹1,399</div>
+                    <div class="installation-box">
+                        <input type="checkbox" id="setup-cp1" class="setup-cb">
+                        <label for="setup-cp1">Include Installation (+₹600)</label>
+                    </div>
+                    <button class="item-action-btn" data-name="CP Plus Illumix 2.4MP Full HD Bullet Camera" data-cb="setup-cp1">Add to Order Portfolio</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-display"><img src="photos/illumix_doom.jpg" alt="CP Plus Illumix 2.4MP Full HD Dome Camera"></div>
+                <div class="item-details">
+                    <h3>CP Plus Illumix 2.4MP Full HD Dome Camera</h3>
+                    <div class="item-cost">Price: ₹1,399</div>
+                    <div class="installation-box">
+                        <input type="checkbox" id="setup-cp2" class="setup-cb">
+                        <label for="setup-cp2">Include Installation (+₹600)</label>
+                    </div>
+                    <button class="item-action-btn" data-name="CP Plus Illumix 2.4MP Full HD Dome Camera" data-cb="setup-cp2">Add to Order Portfolio</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-display"><img src="photos/ip_2mp_dome.jpg" alt="CP Plus Illumix 2MP IP Dome Camera with Audio & Night Vision"></div>
+                <div class="item-details">
+                    <h3>CP Plus Illumix 2MP IP Dome Camera (Audio & Night Vision)</h3>
+                    <div class="item-cost">Price: ₹2,099</div>
+                    <div class="installation-box">
+                        <input type="checkbox" id="setup-cp3" class="setup-cb">
+                        <label for="setup-cp3">Include Installation (+₹700)</label>
+                    </div>
+                    <button class="item-action-btn" data-name="CP Plus Illumix 2MP IP Dome Camera with Audio & Night Vision" data-cb="setup-cp3">Add to Order Portfolio</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-display"><img src="photos/ip_2mp_bullet.jpg" alt="CP Plus Illumix 2MP IP Bullet Camera with Audio"></div>
+                <div class="item-details">
+                    <h3>CP Plus Illumix 2MP IP Bullet Camera with Audio</h3>
+                    <div class="item-cost">Price: ₹2,999</div>
+                    <div class="installation-box">
+                        <input type="checkbox" id="setup-cp4" class="setup-cb">
+                        <label for="setup-cp4">Include Installation (+₹700)</label>
+                    </div>
+                    <button class="item-action-btn" data-name="CP Plus Illumix 2MP IP Bullet Camera with Audio" data-cb="setup-cp4">Add to Order Portfolio</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-display"><img src="photos/4ch .jpg" alt="CP-Plus 4 Channel DVR"></div>
+                <div class="item-details">
+                    <h3>CP-Plus 4 Channel DVR (Supports Up to 2.4MP Cameras)</h3>
+                    <div class="item-cost">Price: ₹2,549</div>
+                    <div class="installation-box">
+                        <input type="checkbox" id="setup-cp5" class="setup-cb">
+                        <label for="setup-cp5">Include Installation (+₹1,200)</label>
+                    </div>
+                    <button class="item-action-btn" data-name="CP-Plus 4 Channel DVR (Supports Up to 2.4MP)" data-cb="setup-cp5">Add to Order Portfolio</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-display"><img src="photos/4ch .jpg" alt="CP-Plus 8 Channel DVR"></div>
+                <div class="item-details">
+                    <h3>CP-Plus 8 Channel DVR (Supports Up to 2.4MP Cameras)</h3>
+                    <div class="item-cost">Price: ₹3,650</div>
+                    <div class="installation-box">
+                        <input type="checkbox" id="setup-cp6" class="setup-cb">
+                        <label for="setup-cp6">Include Installation (+₹1,500)</label>
+                    </div>
+                    <button class="item-action-btn" data-name="CP-Plus 8 Channel DVR (Supports Up to 2.4MP)" data-cb="setup-cp6">Add to Order Portfolio</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-display"><img src="photos/4ch_NVR.jpg" alt="CP-Plus 8 Channel NVR"></div>
+                <div class="item-details">
+                    <h3>CP-Plus 8 Channel High-Definition NVR</h3>
+                    <div class="item-cost">Price: ₹4,999</div>
+                    <div class="installation-box">
+                        <input type="checkbox" id="setup-cp7" class="setup-cb">
+                        <label for="setup-cp7">Include Installation (+₹2,000)</label>
+                    </div>
+                    <button class="item-action-btn" data-name="CP-Plus 8 Channel NVR" data-cb="setup-cp7">Add to Order Portfolio</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-display"><img src="photos/4ch_NVR.jpg" alt="CP-Plus 4 Channel NVR"></div>
+                <div class="item-details">
+                    <h3>CP-Plus 4 Channel High-Definition NVR</h3>
+                    <div class="item-cost">Price: ₹4,399</div>
+                    <div class="installation-box">
+                        <input type="checkbox" id="setup-cp8" class="setup-cb">
+                        <label for="setup-cp8">Include Installation (+₹1,500)</label>
+                    </div>
+                    <button class="item-action-btn" data-name="CP-Plus 4 Channel NVR" data-cb="setup-cp8">Add to Order Portfolio</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <main id="view-about" class="page-view">
+        <section class="about-hero">
+            <h2>About us</h2>
+            <h3>Trusted Security Solutions Since 2006</h3>
+            <p>Professional CCTV installation, DVR setup, door phone systems, and surveillance solutions for homes, shops, and offices.</p>
+        </section>
+
+        <section class="about-content">
+            <div class="editorial-block">
+                <h4>Complete CCTV & Surveillance Solutions</h4>
+                <p>We specialize in CCTV Installation, DVR systems, door phones, and security solutions for homes, shops, and offices. We focus on reliable products, professional installation, and customer satisfaction.</p>
+            </div>
+
+            <div class="team-block">
+                <h4>Meet the Team</h4>
+                <p class="team-subtext">Expert technicians ensuring your safety</p>
+
+                <div class="profiles-grid">
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <img src="papa.jpg" alt="Vinay Kumar">
+                        </div>
+                        <div class="profile-info">
+                            <h5>Vinay Kumar</h5>
+                            <span class="role-tag">Founder & Security Specialist</span>
+                            <p>Providing trusted CCTV and security solutions, with over 20 years of experience in CCTV installation, DVR setup, door phone systems, and security services for homes, shops, and offices.</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <img src="my-photo.jpg" alt="Nikunj Sagar">
+                        </div>
+                        <div class="profile-info">
+                            <h5>Nikunj Sagar</h5>
+                            <span class="role-tag">Technical Manager</span>
+                            <p>Handles website management, product updates, customer coordination, and digital operations for VisionGuard Systems.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Products</h4>
+                <ul>
+                    <li><a class="footer-nav" data-target="shop">Access Control Systems</a></li>
+                    <li><a class="footer-nav" data-target="shop">High-Def Cameras</a></li>
+                    <li><a class="footer-nav" data-target="shop">Installation Protection</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Customer Care</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="tel:+919810946227">Contact Desk</a></li>
+                </ul>
+            </div>
+            <div class="footer-col special-col">
+                <h4>Looking for more products?</h4>
+                <p>Contact us on WhatsApp for the latest pricing, availability, and custom hardware orders.</p>
+                <a href="https://wa.me/919810946227" target="_blank" class="whatsapp-btn">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp: +91 9810946227
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; VisionGuard Systems. All Rights Reserved.</p>
+            <div>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // --- 1. DYNAMIC PAGE ROUTING (NAV CHANGER) ---
+            const navLinks = document.querySelectorAll(".nav-link, .footer-nav");
+            const pageViews = document.querySelectorAll(".page-view");
+
+            function changePage(targetId) {
+                pageViews.forEach(view => {
+                    view.classList.remove("active-view");
+                });
+
+                document.querySelectorAll(".nav-link").forEach(link => {
+                    link.classList.remove("active");
+                });
+
+                const targetPage = document.getElementById(`view-${targetId}`);
+                if (targetPage) {
+                    targetPage.classList.add("active-view");
+                }
+
+                const targetNav = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+                if (targetNav) {
+                    targetNav.classList.add("add"); // backwards fallback
+                    targetNav.classList.add("active");
+                }
+
+                window.scrollTo({ top: 0, behavior: "instant" });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const target = link.getAttribute("data-target");
+                    changePage(target);
+                });
+            });
+
+            const exploreBtn = document.getElementById("hero-explore-btn");
+            if (exploreBtn) {
+                exploreBtn.addEventListener("click", () => {
+                    changePage("shop");
+                });
+            }
+
+            // --- 2. SHOP CART WITH DIRECT WHATSAPP ACTION ---
+            const buyButtons = document.querySelectorAll(".item-action-btn");
+
+            buyButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const productName = button.getAttribute("data-name");
+                    const associatedCheckboxId = button.getAttribute("data-cb");
+                    const isInstallationChecked = document.getElementById(associatedCheckboxId).checked;
+
+                    // WhatsApp Custom Message Text Formulation
+                    let textMessage = `Hello VisionGuard, I want to inquire/order:\n- Product: ${productName}`;
+                    if (isInstallationChecked) {
+                        textMessage += `\n- Requirement: Need On-site Installation Service`;
+                    } else {
+                        textMessage += `\n- Requirement: Hardware Delivery Only`;
+                    }
+
+                    // Encode message for URL format
+                    const encodedMessage = encodeURIComponent(textMessage);
+                    
+                    // Redirecting directly to business WhatsApp channel
+                    window.open(`https://wa.me/919810946227?text=${encodedMessage}`, '_blank');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
