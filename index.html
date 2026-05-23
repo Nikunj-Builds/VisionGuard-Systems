@@ -361,14 +361,49 @@
             text-align: center;
         }
 
-        .about-hero h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
-        .about-hero h3 { color: var(--brand-red); font-size: 1.4rem; margin-bottom: 1rem; }
-        .about-hero p { color: var(--cool-gray); max-width: 700px; margin: 0 auto; }
+        /* --- ABOUT US DETAILS (LEFT ALIGNED & PREMIUM SYSTEM) --- */
+        .about-hero {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 5rem 2rem;
+            text-align: left; /* Center se left kiya */
+        }
 
-        .about-content { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
-        .editorial-block { margin-bottom: 4rem; }
-        .editorial-block h4 { font-size: 1.8rem; margin-bottom: 1rem; }
-        .editorial-block p { color: var(--cool-gray); line-height: 1.7; }
+        /* Pure layout ko baki sections ki tarah 1300px max-width par lock karne ke liye */
+        .about-hero-container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* "About us" ko top left me chhota premium badge look dene ke liye */
+        .about-hero h2 { 
+            font-size: 0.95rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1.2rem; 
+            color: var(--cool-gray);
+        }
+
+        /* "Trusted Security Solutions Since 2006" heading ko left me bada karne ke liye */
+        .about-hero h3 { 
+            color: var(--pure-white); 
+            font-size: 3.2rem; /* Size badha kar bada kiya */
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem; 
+            max-width: 850px; 
+            letter-spacing: -1px;
+        }
+
+        /* Paragraph text ko left grid ke mutabik set karne ke liye */
+        .about-hero p { 
+            color: var(--cool-gray); 
+            font-size: 1.15rem;
+            line-height: 1.7;
+            max-width: 750px; 
+            margin: 0; /* Margin auto hataya taaki left me align rahe */
+        }
 
         .team-block h4 { font-size: 1.8rem; }
         .team-subtext { color: var(--cool-gray); margin-bottom: 3rem; }
@@ -640,9 +675,11 @@
 
     <main id="view-about" class="page-view">
         <section class="about-hero">
-            <h2>About us</h2>
-            <h3>Trusted Security Solutions Since 2006</h3>
-            <p>Professional CCTV installation, DVR setup, door phone systems, and surveillance solutions for homes, shops, and offices.</p>
+            <div class="about-hero-container">
+                <h2>About us</h2>
+                <h3>Trusted Security Solutions Since 2006</h3>
+                <p>Professional CCTV installation, DVR setup, door phone systems, and surveillance solutions for homes, shops, and offices.</p>
+            </div>
         </section>
 
         <section class="about-content">
