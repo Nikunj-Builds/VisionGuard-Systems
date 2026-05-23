@@ -485,9 +485,37 @@
             font-size: 0.85rem;
             color: var(--cool-gray);
         }
-
+        /* --- CUSTOM TOAST NOTIFICATION --- */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--card-bg);
+            color: var(--pure-white);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--brand-red);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+            font-size: 0.95rem;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        }
+        
+        .toast-notification.show-toast {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        .toast-notification i {
+            color: #25d366; /* Green checkmark icon */
+        }
         .footer-bottom a { color: var(--cool-gray); text-decoration: none; margin-left: 1rem; }
-
         /* --- RESPONSIVE MOBILE FIXES --- */
         @media (max-width: 968px) {
             .hero-viewport { grid-template-columns: 1fr; padding: 3rem 1rem; }
@@ -518,7 +546,7 @@
             </nav>
             <div class="nav-right">
                 <a href="tel:+919810946227" class="phone-link"><i class="fa-solid fa-phone"></i> +91 9810946227</a>
-                <a href="tel:+919810946227" class="top-contact-btn">Contact Us</a>
+                <a href="javascript:void(0)" id="top-contact-click" class="top-contact-btn">Contact Us</a>
             </div>
         </div>
     </header>
